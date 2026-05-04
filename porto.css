@@ -1,0 +1,223 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BASE */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: #111;
+  background: #fff;
+}
+
+/* TYPOGRAPHY */
+h1,
+h2 {
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* LAYOUT */
+header,
+section {
+  width: 100%;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+  background-color: grey;
+}
+
+.container form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* PARALLAX SECTIONS */
+.parallax {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Background variations */
+.bg-1 {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://picsum.photos/id/1/1600/900");
+}
+
+.bg-2 {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.5)),
+    url("https://us-west-2.graphassets.com/cmcu78gdx085p08n06vc58sxv/resize=width:1200/output=format:webp/cmclwq8cq1y3907n2uw1ukiwj");
+}
+
+/* Content inside parallax */
+.parallax .content {
+  max-width: 1000px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  font-size: 25px;
+  border-radius: 100px;
+  width: 60%;
+}
+
+.bg-1 h1,
+.bg-1 p {
+  color: #fff;
+}
+
+.bg-2 h2,
+.bg-2 p {
+  color: white;
+}
+
+/* NORMAL SECTION */
+.normal-section {
+  background: #fafafa;
+}
+
+/* BUTTON */
+.btn-contact {
+  margin-top: 20px;
+  padding: 10px 22px;
+  border: 1px solid #111;
+  border-radius: 10px;
+  background: transparent;
+  color: #111;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.Bodo {
+  /* width: 75%; */
+}
+
+.Bodo img {
+  object-fit: cover;
+  width: 350px;
+  height: 450px;
+  border-radius: 10%;
+  gap: 100px;
+}
+
+.btn-contact:hover {
+  background: #111;
+  color: #fff;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10;
+  border-radius: 10px;
+}
+
+.contact-form input,
+textarea {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+.contact-form button {
+  background: white;
+  padding: 8px;
+  color: grey;
+  cursor: pointer;
+  border: none;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.skill-wrapper {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: left;
+  width: 225px;
+  font-size: medium;
+}
+
+.skill-wrapper h3 {
+  margin-top: 10px;
+  color: white;
+}
+
+.skill-wrapper ul {
+  padding: 20px 20px;
+}
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: #777;
+  border-top: 1px solid #eee;
+}
+
+/* SMOOTH SCROLL */
+html {
+  scroll-behavior: smooth;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 40px 15px;
+    /* background-color: #555; */
+  }
+
+  .parallax {
+    background-attachment: scroll;
+  }
+}

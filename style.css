@@ -1,0 +1,70 @@
+body html {
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+  line-height: 1.5;
+}
+.parallax {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  /* background-color: whitesmoke; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.bg-1 {
+  background-image: url(https://us-west-2.graphassets.com/cmcu78gdx085p08n06vc58sxv/resize=width:1200/output=format:webp/cmclwq8cq1y3907n2uw1ukiwj);
+}
+.bg-2 {
+  background-image: url(https://www.mindful.org/content/uploads/What-Happens-When-We-Reconnect-with-Nature.jpg);
+}
+.content {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  font-size: 25px;
+  border-radius: 100px;
+  width: 60%;
+}
+
+.normal-section {
+  padding: 80px 20px;
+  background-color: whitesmoke;
+  text-align: center;
+}
+.container {
+  color: orange;
+  font-size: large;
+  background-color: grey;
+  max-width: 100%;
+  max-height: 100%;
+  text-align: left;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 2rem;
+  color: aqua;
+}
+.btn-contact {
+  padding: 12px 25px;
+  background-color: aqua;
+  color: azure;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+footer {
+  background-color: blue;
+  max-width: 100%;
+  text-align: center;
+  padding: 20px 0;
+}

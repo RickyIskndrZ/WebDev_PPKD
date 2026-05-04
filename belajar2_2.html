@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>
+            Data Peserta
+        </title>
+        <style>
+            body{
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                background-color: azure;
+            }
+            .table{
+                background-color: aliceblue;
+                padding: 30px;
+                border-collapse: collapse;
+                border-radius: 15px;
+                box-shadow: 0 0 5px #000 ;
+                width: 80%;
+                max-width: 800px;
+                margin: 50px auto;
+            }
+            h2,
+            p{
+                text-align: center;
+            }
+            .table{
+                width: 100%;
+                /*border-collapse: collapse;*/
+                margin-top: 20px;
+                font-size: 15px;
+            }
+            .table thead tr{
+                background-color: aqua;
+                color: black;
+                text-align: center;
+
+            }
+            .table th, table td{
+                border-bottom:  1px solid #000;
+                padding: 12px 15px;
+                
+
+            }
+            .btn-plus{
+                text-align: right;
+            }
+            .btn{
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: greenyellow;
+                color: black;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: 14px;
+                transition: background 0.3s;
+            }
+            .btn:hover{
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="table">
+            <H2> 
+                Data Peserta
+            </H2>
+            <p>
+                 Data berikut adalah data Peserta   
+            </p>
+            <div class="btn-plus">
+                <a href="belajar2.html" class="btn"> + Tambah Peserta</a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Nomor</th>
+                    </tr>
+                    <tbody>
+                     <tr>
+                        <td>1</td>
+                        <td>lanang</td>
+                        <td>bla.com</td>
+                        <td>0999</td>
+                     </tr>
+                     <tr>
+                        <td>2</td>
+                        <td>danang</td>
+                        <td>gagaga@bl.com</td>
+                        <td>87678</td>
+                     </tr>
+                     <tr>
+                        <td>3</td>
+                        <td>ganang</td>
+                        <td>gagah@bl.com</td>
+                        <td>87678666</td>
+                     </tr>
+                   </tbody>
+                </thead>
+            </table>
+        </div>
+    </body>
+</html>

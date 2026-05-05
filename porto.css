@@ -125,15 +125,28 @@ section {
 }
 
 .Bodo {
-  /* width: 75%; */
+  /* width: 25%; */
 }
 
-.Bodo img {
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.gallery img {
   object-fit: cover;
   width: 350px;
   height: 450px;
   border-radius: 10%;
-  gap: 100px;
+  width: 100%;
+  margin: 0 auto;
+  transition: 0.8s;
+  /* gap: 100px; */
+}
+
+.gallery img:hover {
+  transform: scale(1.55);
 }
 
 .btn-contact:hover {
@@ -204,10 +217,32 @@ html {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
   h1 {
     font-size: 2rem;
   }
+  .nav-container button {
+    display: block;
+  }
 
+  #menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 200px;
+    padding: 10px 0px;
+  }
+  #menu a {
+    padding: 10px;
+  }
+  #menu.show {
+    display: flex;
+  }
   h2 {
     font-size: 1.5rem;
   }
@@ -220,4 +255,53 @@ html {
   .parallax {
     background-attachment: scroll;
   }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 0;
+  text-align: center;
+  z-index: 1000;
+}
+
+.nav-container h2 {
+  color: #fafafa;
+}
+
+/* .nav-container h2 {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 0;
+  text-align: center;
+  z-index: 1000;
+} */
+
+.nav-container a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-container a:hover {
+  color: yellow;
+}
+
+.logo {
+  color: red;
 }

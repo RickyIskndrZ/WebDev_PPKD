@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method="post" onsubmit="return false;">
+      <label for="">Nama</label>
+      <input type="text" id="nama" /><br />
+      <label for="">Nilai Teori</label>
+      <input type="number" id="nilai1" /><br />
+      <label for="">Nilai Praktek</label>
+      <input type="number" id="nilai2" /><br />
+      <label for="">Kehadiran</label>
+      <input type="number" id="nilai3" /><br />
+      <label class="mb-3" for="">Pelanggaran berat</label>
+      <div class="row">
+        <input type="radio" name="status" id="richtig" value="ya" />ya
+        <input type="radio" name="status" id="falsch" value="tidak" />Tidak
+      </div>
+      <!-- <input type="text" id="nilai2" /><br /> -->
+      <button onclick="penilaian()">submit</button>
+    </form>
+    <p id="hasil"></p>
+    <script>
+      function penilaian() {
+        let nama = document.getElementById('nama').value;
+
+        let nilai1 = parseFloat(document.getElementById('nilai1').value);
+        let nilai2 = parseFloat(document.getElementById('nilai2').value);
+        let nilai3 = parseFloat(document.getElementById('nilai3').value);
+
+        let richtig = document.getElementById('richtig').checked;
+        let falsch = document.getElementById('falsch').checked;
+
+        let status;
+        let nilai_rata = 0;
+
+        if (nilai1 >= 75 && nilai2 >= 80) {
+          if (nilai3 >= 80 && falsch == true) {
+            nilai_rata = (nilai1 + nilai2) / 2;
+
+            if (nilai_rata > 90) {
+              status = 'lulus dengan sangat baik';
+            } else if (nilai_rata > 85) {
+              status = 'Lulus dengan sangat Baik';
+            } else if (nilai_rata > 75) {
+              status = 'lulus baik';
+            } else {
+              status = 'Lulus';
+            }
+          } else {
+            status = 'tidak lulus';
+          }
+        } else {
+          status = 'tidak lulus';
+        }
+
+        document.getElementById('hasil').innerHTML =
+          'nama: ' +
+          nama +
+          '<br>' +
+          'rata-rata: ' +
+          nilai_rata +
+          '<br>' +
+          'status: ' +
+          status;
+      }
+    </script>
+  </body>
+</html>

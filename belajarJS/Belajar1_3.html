@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method="post" onsubmit="return false;">
+      <label for="">Nilai1</label>
+      <input type="number" id="nilai1" /><br />
+      <label for="">Nilai2</label>
+      <input type="number" id="nilai2" /><br />
+      <button onclick="penjumlahan()">Hasil Penjumlahan</button>
+      <button>Hasil Pengurangan</button>
+      <button>Hasil Perkalian</button>
+      <button>Hasil Pembagian</button>
+    </form>
+    <h4 id="hasil"></h4>
+    <script>
+      function penjumlahan() {
+        let nilai1 = parseFloat(document.getElementById('nilai1').value);
+        let nilai2 = parseFloat(document.getElementById('nilai1').value);
+        let hasil = nilai1 + nilai2;
+        alert(`hasilnya adalah ${hasil}`);
+      }
+    </script>
+  </body>
+</html>

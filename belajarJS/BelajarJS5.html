@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="inputNama" placeholder="Masukan nama anda " />
+    <button id="btn-sapa">Sapa saya!</button>
+
+    <h2 id="teks-sapaan"></h2>
+
+    <script>
+      // event handling + DOM
+      // #id, class: . element/TAG: h1
+      const btnsapa = document.getElementById('btn-sapa');
+
+      btnsapa.addEventListener('click', function () {
+        // mau melakukan apa
+        const inputNama = document.getElementById('inputNama').value;
+        const teksSapaan = document.getElementById('teks-sapaan');
+        console.log(inputNama);
+        teksSapaan.innerText = 'Halo, selamat datang ${inputNama}';
+        teksSapaan.innerText = 'Halo, selamat datang ' + inputNama;
+      });
+
+      // btnSapa.addEventListener('click', () => {}); == arrow function
+    </script>
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ticket Management System</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white">
+
+  <!-- BACKGROUND GLOW -->
+  <div class="fixed inset-0 opacity-20 pointer-events-none">
+    <div class="absolute w-[500px] h-[500px] bg-purple-500 blur-[150px] top-10 left-10 rounded-full"></div>
+    <div class="absolute w-[500px] h-[500px] bg-blue-500 blur-[150px] bottom-10 right-10 rounded-full"></div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto p-6">
+
+    <!-- HEADER -->
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-extrabold">
+        🎫 Ticket Management System
+      </h1>
+      <p class="text-gray-300 mt-2">
+        Simple. Fast. Built for travel, teams, and chaos control.
+      </p>
+    </header>
+
+    <!-- STATS -->
+    <div class="grid grid-cols-3 gap-4 mb-6">
+
+      <div class="bg-white/10 p-4 rounded-xl border border-white/10">
+        <p>Total</p>
+        <h2 id="total" class="text-3xl font-bold">0</h2>
+      </div>
+
+      <div class="bg-green-500/10 p-4 rounded-xl border border-green-400/20">
+        <p>Open</p>
+        <h2 id="open" class="text-3xl font-bold text-green-300">0</h2>
+      </div>
+
+      <div class="bg-red-500/10 p-4 rounded-xl border border-red-400/20">
+        <p>Closed</p>
+        <h2 id="closed" class="text-3xl font-bold text-red-300">0</h2>
+      </div>
+
+    </div>
+
+    <!-- CREATE -->
+    <div class="bg-white/10 p-5 rounded-xl border border-white/10 mb-6">
+
+      <h2 class="text-lg font-semibold mb-3">Create Ticket</h2>
+
+      <div class="grid md:grid-cols-3 gap-3">
+
+        <input id="title"
+          class="p-3 rounded-lg bg-black/30 border border-white/10"
+          placeholder="Title"
+        />
+
+        <input id="description"
+          class="p-3 rounded-lg bg-black/30 border border-white/10"
+          placeholder="Description"
+        />
+
+        <select id="priority"
+          class="p-3 rounded-lg bg-black/30 border border-white/10">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+
+      </div>
+
+      <button onclick="createTicket()"
+        class="mt-4 w-full py-3 rounded-lg font-semibold
+        bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
+        Create Ticket
+      </button>
+
+    </div>
+
+    <!-- SEARCH -->
+    <input id="search"
+      onkeyup="renderTickets()"
+      class="w-full p-3 rounded-xl bg-white/10 border border-white/10 mb-6"
+      placeholder="Search tickets..."
+    />
+
+    <!-- KANBAN -->
+    <div class="grid md:grid-cols-3 gap-4">
+
+      <div>
+        <h2 class="mb-2 font-semibold text-green-300">Open</h2>
+        <div id="openCol" class="space-y-3"></div>
+      </div>
+
+      <div>
+        <h2 class="mb-2 font-semibold text-yellow-300">In Progress</h2>
+        <div id="progressCol" class="space-y-3"></div>
+      </div>
+
+      <div>
+        <h2 class="mb-2 font-semibold text-red-300">Closed</h2>
+        <div id="closedCol" class="space-y-3"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+/* =========================
+   DATABASE (LOCAL STORAGE)
+========================= */
+
+const DB_KEY = "tickets_db";
+
+function getTickets() {
+  return JSON.parse(localStorage.getItem(DB_KEY)) || [];
+}
+
+function saveTickets(tickets) {
+  localStorage.setItem(DB_KEY, JSON.stringify(tickets));
+}
+
+/* =========================
+   CREATE TICKET
+========================= */
+
+function createTicket() {
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const priority = document.getElementById("priority").value;
+
+  if (!title || !description) return;
+
+  const tickets = getTickets();
+
+  tickets.push({
+    id: Date.now(),
+    title,
+    description,
+    priority,
+    status: "open",
+    createdAt: new Date().toLocaleString()
+  });
+
+  saveTickets(tickets);
+  renderTickets();
+
+  document.getElementById("title").value = "";
+  document.getElementById("description").value = "";
+}
+
+/* =========================
+   UPDATE STATUS
+========================= */
+
+function changeStatus(id) {
+  let tickets = getTickets();
+
+  tickets = tickets.map(t => {
+    if (t.id === id) {
+      if (t.status === "open") t.status = "in-progress";
+      else if (t.status === "in-progress") t.status = "closed";
+      else t.status = "open";
+    }
+    return t;
+  });
+
+  saveTickets(tickets);
+  renderTickets();
+}
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteTicket(id) {
+  let tickets = getTickets();
+  tickets = tickets.filter(t => t.id !== id);
+
+  saveTickets(tickets);
+  renderTickets();
+}
+
+/* =========================
+   RENDER
+========================= */
+
+function renderTickets() {
+  const tickets = getTickets();
+  const search = document.getElementById("search").value.toLowerCase();
+
+  const filtered = tickets.filter(t =>
+    t.title.toLowerCase().includes(search)
+  );
+
+  const openCol = document.getElementById("openCol");
+  const progressCol = document.getElementById("progressCol");
+  const closedCol = document.getElementById("closedCol");
+
+  openCol.innerHTML = "";
+  progressCol.innerHTML = "";
+  closedCol.innerHTML = "";
+
+  filtered.forEach(t => {
+
+    const card = `
+      <div class="bg-white/10 p-4 rounded-xl border border-white/10">
+
+        <div class="flex justify-between">
+          <h3 class="font-bold">${t.title}</h3>
+          <span class="text-xs px-2 py-1 rounded ${
+            t.priority === "high" ? "bg-red-500" :
+            t.priority === "medium" ? "bg-yellow-500" :
+            "bg-green-500"
+          }">
+            ${t.priority}
+          </span>
+        </div>
+
+        <p class="text-gray-300 mt-2">${t.description}</p>
+
+        <p class="text-xs text-gray-400 mt-2">${t.createdAt}</p>
+
+        <div class="flex gap-2 mt-3">
+
+          <button onclick="changeStatus(${t.id})"
+            class="bg-blue-500 px-3 py-1 rounded text-sm">
+            Move
+          </button>
+
+          <button onclick="deleteTicket(${t.id})"
+            class="bg-red-500 px-3 py-1 rounded text-sm">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+    if (t.status === "open") openCol.innerHTML += card;
+    if (t.status === "in-progress") progressCol.innerHTML += card;
+    if (t.status === "closed") closedCol.innerHTML += card;
+
+  });
+
+  updateStats();
+}
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats() {
+  const tickets = getTickets();
+
+  document.getElementById("total").innerText = tickets.length;
+  document.getElementById("open").innerText = tickets.filter(t => t.status === "open").length;
+  document.getElementById("closed").innerText = tickets.filter(t => t.status === "closed").length;
+}
+
+/* INIT */
+renderTickets();
+
+</script>
+
+</body>
+</html>

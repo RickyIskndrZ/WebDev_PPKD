@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Array JS</title>
+  </head>
+  <body>
+    <!-- array di javascript
+   Array itu sebuah tipe data yang bisa menampung banyak nilai
+   1. dimensi
+   2. Multi dimensi -->
+
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Jenis Kelamin</th>
+          <th>Umur</th>
+          <th>Alamat</th>
+        </tr>
+      </thead>
+      <tbody id="table-siswa"></tbody>
+    </table>
+
+    <script>
+      let daftarBuah = ['Apel', 'Nanas', 'Jeruk', 'Semangka'];
+      // berisi kumpulan number(angka)
+      let daftarHarga = [10000, 20000, 30000];
+
+      let mixHargaBuah = ['Nanas', 10000, 'Semangka', 20000];
+
+      console.log(daftarBuah[1]);
+      console.log(daftarHarga[1]); //Nanas
+
+      //multi dimensi
+      let peserta = [
+        ['rick', '20', 'Jakarta', 'Pria'],
+        ['Morty', '20', 'Jakarta', 'Pria'],
+      ];
+
+      console.log(peserta);
+      console.log(peserta[0][3]);
+
+      let daftarSiswa = [
+        {
+          nama: 'Budi Sudarsono',
+          umur: '15',
+          alamat: 'Bekasi',
+          jenisKelamin: 'Pria',
+        },
+        {
+          nama: 'Bowo',
+          umur: '15',
+          alamat: 'Solo',
+          jenisKelamin: 'Pria',
+        },
+        {
+          nama: 'Joko',
+          umur: '15',
+          alamat: 'Solo',
+          jenisKelamin: 'Pria',
+        },
+      ];
+      console.log(daftarSiswa);
+      console.log(daftarSiswa[0].nama);
+
+      function callName() {
+        return 'Budi';
+      }
+      const tbodySiswa = document.getElementById('table-siswa');
+
+      function getDataSiswa() {
+        tbodySiswa.innerHTML = '';
+
+        for (let i = 0; i < daftarSiswa.length; i++) {
+          let barisBaru = document.createElement('tr'); //<tr></tr>
+          barisBaru.innerHTML = `<td>${daftarSiswa[i].nama}</td>
+        <td>${daftarSiswa[i].umur}</td>
+        <td>${daftarSiswa[i].alamat}</td>
+        <td>${daftarSiswa[i].jenisKelamin}</td>`;
+
+          console;
+          tbodySiswa.appendChild(barisBaru);
+        }
+      }
+
+      getDataSiswa();
+    </script>
+  </body>
+</html>

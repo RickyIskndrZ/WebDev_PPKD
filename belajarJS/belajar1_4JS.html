@@ -1,0 +1,44 @@
+<body>
+    <form action="" method="post" onsubmit="return false">
+        <label for="">Nilai 1</label>
+        <input type="number" id="nilai1"><br>
+        <select id="operator" required>
+            <option value="">Pilih Operatornya</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+        </select>
+        <label for="">Nilai 2</label>
+        <input type="number" id="nilai2"><br>
+        <button onclick="perhitungan()">Hitung</button>
+    </form>
+    <input type="text" id="hasil">
+    <script>
+
+        function perhitungan() {
+            let nilai1 = parseFloat(document.getElementById("nilai1").value);
+            let nilai2 = parseFloat(document.getElementById("nilai2").value);
+            let operator = document.getElementById("operator").value;
+            let hasil = 0;
+            switch (operator) {
+                case '*':
+                hasil = nilai1 * nilai2;
+                break;
+                case '/':
+                hasil = nilai1 / nilai2;
+                break;
+                case '+':
+                hasil = nilai1 + nilai2;
+                break;
+                case '-':
+                hasil = nilai1 - nilai2;
+                break;
+                hasil = "Tidak Ada!";
+            }
+            document.getElementById("hasil").value = hasil;
+
+        }
+    </script>
+  </body>
+</html>

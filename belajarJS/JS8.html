@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- Array di javascript
+    Array itu sebuah tipe data yang bisa menampung banyak nilai
+    1.Satu dimensi
+    2.Multi Dimensi
+    3.Array object -->
+
+    <div class="mb-3">
+        <label for="">Nama</label>
+        <input type="text" id="input-nama" placeholder="Masukkan Nama...">
+    </div>
+    <button id="btn-tambah">Tambah Data</button>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Jenis Kelamin</th>
+                <th>Umur</th>
+                <th>Alamat</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="table-siswa"></tbody>
+    </table>
+    <script>
+        // berisi kumpulan string
+        let daftarBuah = ["Apel", "Nanas", "Jeruk", "Semangka"];
+        let daftarHarga = [10000, 20000, 30000]
+        
+        let mixHargaBuah = ["Nanas", 10000, "Semangka", 20000];
+
+        // 0, 1, 2
+        console.log(daftarBuah[1]); //nanas
+        console.log(daftarHarga[1]); //30000
+
+        // multi dimensi
+        let peserta = [ 
+            [
+                "Fikri",
+                "15",
+                "Jakarta",
+                "Laki-laki"
+            ],
+            [
+                "Budi",
+                "16",
+                "Bogor",
+                "Laki-laki"
+            ],
+        ];
+
+        console.log(peserta)
+        console.log(peserta[0][3]); //fikri
+        console.log(peserta[1][2]); //budi
+
+        let daftarSiswa = [
+            {
+                nama: "Fikri Alrasyid",
+                umur: "15",
+                alamat: "Jakarta",
+                jenisKelamin: "Laki-laki"
+            },
+            {
+                nama: "Ricky Yogas",
+                umur: "16",
+                alamat: "Depok",
+                jenisKelamin: "Laki-laki"
+            },
+            {
+                nama: "Ucup",
+                umur: "17",
+                alamat: "Bandung",
+                jenisKelamin: "Laki-laki"
+            },
+        ]
+        // console.log(daftarSiswa);
+        // console.log(daftarSiswa0[0].nama)
+        // console.log(daftarSiswa0[1].nama)
+        // console.log(daftarSiswa0[2].nama)
+
+        function callname(){
+            return "Fikri Alrasyid";
+        }
+        const tbodySiswa = document.getElementById('table-siswa');
+        function getDataSiswa(){
+            tbodySiswa.innerHTML = "";
+
+            for (let i = 0; i < daftarSiswa.length; i++){
+                let barisBaru = document.createElement('tr');
+                barisBaru.innerHTML = 
+                `<td>${daftarSiswa[i].nama}</td>
+                <td>${daftarSiswa[i].jenisKelamin}</td>
+                <td>${daftarSiswa[i].umur}</td>
+                <td>${daftarSiswa[i].alamat}</td>`
+                <td><button class='btn-hapus' data-index="${i}">Hapus</button></td>
+                
+                console.log(barisBaru);
+                tbodySiswa.appendChild(barisBaru);
+            }
+            
+
+        }
+
+        getDataSiswa();
+
+        tbodySiswa.addEventListener('click', function(event){
+            if(event.target.classList.contains('btn-hapus')) {
+                let indexData = event.target.getAttribute('data-index'); //dataset.index;
+                daftarSiswa.splice(indexData, 1); //splice fungsi menghapus sebuah range
+                getDataSiswa();
+            }
+            
+            const btnTambah = document.getElementById('btn-tambah')
+            const inputNama = document.getElementById('input-nama');
+
+            btnTambah.addEventListener('click', function() {
+                // push(): memasukkan data ke dalam array
+                daftarSiswa.push({
+                    name: inputNama.value,
+                    jenisKelamin: "",
+                    umur: "",
+                    alamat: "",
+                })
+
+                getDataSiswa();
+
+                inputNama.value = "";
+
+            })
+
+        });
+
+        
+    </script>
+</body>
+</html>

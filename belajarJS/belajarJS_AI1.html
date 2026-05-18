@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Management System</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #0f172a;
+        color: white;
+        padding: 30px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .card {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 15px;
+      }
+
+      input,
+      textarea,
+      select,
+      button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border: none;
+      }
+
+      input,
+      textarea,
+      select {
+        background: #334155;
+        color: white;
+      }
+
+      button {
+        background: #3b82f6;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      button:hover {
+        background: #2563eb;
+      }
+
+      .ticket-list {
+        margin-top: 30px;
+      }
+
+      .ticket {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+      }
+
+      .ticket-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .badge {
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .open {
+        background: green;
+      }
+
+      .progress {
+        background: orange;
+      }
+
+      .closed {
+        background: red;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .stat {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      .stat h2 {
+        font-size: 35px;
+      }
+
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>🎫 Ticket Management System</h1>
+
+      <!-- STATS -->
+      <div class="stats">
+        <div class="stat">
+          <p>Total Tickets</p>
+          <h2 id="totalTicket">0</h2>
+        </div>
+
+        <div class="stat">
+          <p>Open Tickets</p>
+          <h2 id="openTicket">0</h2>
+        </div>
+
+        <div class="stat">
+          <p>Closed Tickets</p>
+          <h2 id="closedTicket">0</h2>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="grid">
+        <div class="card">
+          <h2>Create Ticket</h2>
+
+          <input type="text" id="title" placeholder="Ticket title" />
+
+          <textarea
+            id="description"
+            placeholder="Ticket description"
+          ></textarea>
+
+          <select id="priority">
+            <option value="Low">Low Priority</option>
+            <option value="Medium">Medium Priority</option>
+            <option value="High">High Priority</option>
+          </select>
+
+          <button onclick="createTicket()">Create Ticket</button>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="card">
+          <h2>Search & Filter</h2>
+
+          <input
+            type="text"
+            id="search"
+            placeholder="Search ticket"
+            onkeyup="renderTickets()"
+          />
+
+          <select id="filter" onchange="renderTickets()">
+            <option value="all">All Status</option>
+            <option value="open">Open</option>
+            <option value="in-progress">In Progress</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TICKET LIST -->
+      <div class="ticket-list" id="ticketContainer"></div>
+    </div>
+
+    <script>
+      // DATABASE
+      let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+
+      // SAVE
+      function saveTickets() {
+        localStorage.setItem('tickets', JSON.stringify(tickets));
+      }
+
+      // CREATE
+      function createTicket() {
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const priority = document.getElementById('priority').value;
+
+        if (!title || !description) {
+          alert('Please fill all fields');
+          return;
+        }
+
+        const ticket = {
+          id: Date.now(),
+          title,
+          description,
+          priority,
+          status: 'open',
+          createdAt: new Date().toLocaleString(),
+        };
+
+        tickets.unshift(ticket);
+
+        saveTickets();
+        renderTickets();
+        clearForm();
+      }
+
+      // CLEAR FORM
+      function clearForm() {
+        document.getElementById('title').value = '';
+        document.getElementById('description').value = '';
+      }
+
+      // DELETE
+      function deleteTicket(id) {
+        tickets = tickets.filter((ticket) => ticket.id !== id);
+
+        saveTickets();
+        renderTickets();
+      }
+
+      // CHANGE STATUS
+      function changeStatus(id) {
+        tickets = tickets.map((ticket) => {
+          if (ticket.id === id) {
+            if (ticket.status === 'open') {
+              ticket.status = 'in-progress';
+            } else if (ticket.status === 'in-progress') {
+              ticket.status = 'closed';
+            } else {
+              ticket.status = 'open';
+            }
+          }
+
+          return ticket;
+        });
+
+        saveTickets();
+        renderTickets();
+      }
+
+      // BADGE
+      function getBadgeClass(status) {
+        if (status === 'open') {
+          return 'open';
+        }
+
+        if (status === 'in-progress') {
+          return 'progress';
+        }
+
+        return 'closed';
+      }
+
+      // STATS
+      function updateStats() {
+        const total = tickets.length;
+
+        const open = tickets.filter(
+          (ticket) => ticket.status === 'open'
+        ).length;
+
+        const closed = tickets.filter(
+          (ticket) => ticket.status === 'closed'
+        ).length;
+
+        document.getElementById('totalTicket').innerHTML = total;
+
+        document.getElementById('openTicket').innerHTML = open;
+
+        document.getElementById('closedTicket').innerHTML = closed;
+      }
+
+      // RENDER
+      function renderTickets() {
+        const container = document.getElementById('ticketContainer');
+
+        const search = document.getElementById('search').value.toLowerCase();
+
+        const filter = document.getElementById('filter').value;
+
+        let filteredTickets = tickets.filter((ticket) => {
+          const matchSearch = ticket.title.toLowerCase().includes(search);
+
+          const matchFilter = filter === 'all' || ticket.status === filter;
+
+          return matchSearch && matchFilter;
+        });
+
+        container.innerHTML = '';
+
+        if (filteredTickets.length === 0) {
+          container.innerHTML = `<p>No tickets found</p>`;
+          updateStats();
+          return;
+        }
+
+        filteredTickets.forEach((ticket) => {
+          container.innerHTML += `
+          
+          <div class="ticket">
+
+            <div class="ticket-top">
+              <h3>${ticket.title}</h3>
+
+              <span class="badge ${getBadgeClass(ticket.status)}">
+                ${ticket.status}
+              </span>
+            </div>
+
+            <p style="margin-top:10px;">
+              ${ticket.description}
+            </p>
+
+            <p style="margin-top:10px;">
+              Priority: <strong>${ticket.priority}</strong>
+            </p>
+
+            <p style="margin-top:10px; font-size:12px;">
+              Created At: ${ticket.createdAt}
+            </p>
+
+            <div class="actions">
+
+              <button onclick="changeStatus(${ticket.id})">
+                Change Status
+              </button>
+
+              <button 
+                onclick="deleteTicket(${ticket.id})"
+                style="background:red;"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+          `;
+        });
+
+        updateStats();
+      }
+
+      // INITIAL LOAD
+      renderTickets();
+    </script>
+  </body>
+</html>

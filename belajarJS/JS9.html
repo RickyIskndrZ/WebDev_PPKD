@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Change</title>
+  </head>
+  <body>
+    <label for="">Pilih Tema Layar</label>
+    <select name="" id="pilih-tema">
+      <option value="">--Pilih Satu Tema--</option>
+      <option value="terang">Terang</option>
+      <option value="gelap">Gelap</option>
+      <option value="biru">Biru</option>
+    </select>
+
+    <h2 id="teks-status">Anda belum memilih tema</h2>
+
+    <script>
+      // change: ketika pengguna benar2 memilih option tersebut
+      const pilihTema = document.getElementById('pilih-tema');
+      const teksStatus = document.getElementById('teks-status');
+
+      const body = document.querySelector('body');
+
+      pilihTema.addEventListener('change', function () {
+        console.log(event);
+        let temaValue = event.target.value;
+        if (temaValue === '') {
+          teksStatus.innerHTML = 'Anda belum memilih tema';
+          body.style.backgroundcolor = 'red';
+          body.style.color = 'black';
+          return; //stop proses
+        }
+
+        if (temaValue === 'terang') {
+          teksStatus.innerText = ' tema Terang';
+          body.style.backgroundColor = 'yellow';
+          body.style.color = 'black';
+        } else if (temaValue === 'gelap') {
+          teksStatus.innerText = ' tema Terang';
+          body.style.backgroundColor = 'blackw';
+          body.style.color = 'white';
+        } else if (temaValue === 'biru') {
+          teksStatus.innerText = ' tema Biru';
+          body.style.backgroundColor = 'blue';
+          body.style.color = 'white';
+        }
+      });
+    </script>
+  </body>
+</html>

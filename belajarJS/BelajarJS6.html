@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remove</title>
+  </head>
+  <body>
+    <!-- remove -->
+    <div
+      class="card"
+      style="background-color: green; color: white; padding: 10px"
+    >
+      <p>Promo Spesial Diskon 50%</p>
+      <button id="tutup-notifikasi">Tutup (x)</button>
+    </div>
+
+    <input type="text" id="input-keranjang" placeholder="Nama Barang..." />
+    <button id="btn-tambah">tambah</button>
+    <ul id="daftar-belanja">
+      <li>Apel <button class="btn-hapus">hapus</button></li>
+      <li>Jeruk <button class="btn-hapus">hapus</button></li>
+      <li>Nanas <button class="btn-hapus">hapus</button></li>
+    </ul>
+
+    <script>
+      const card = document.querySelector('.card');
+      const tutupCard = document.getElementById('tutup-notifikasi');
+      tutupCard.addEventListener('click', function () {
+        card.remove();
+      });
+
+      const btnHapus = document.querySelectorAll('.btn-hapus'); //Array
+      for (let i = 0; i < btnHapus.length; i++) {
+        console.log(i);
+        btnHapus[i].addEventListener('click', function () {
+          //parentElement: <li></li>
+          //btnHapus[i] this
+          this.parentElement.remove();
+        });
+      }
+      // console.log(btnHapus);
+
+      // event delegation : mengontrol event / menangani event pada parent untuk
+      // mengontrol child-child di dalam parent
+      const btnTambah = document.getElementById('btn-tambah');
+      const daftarBelanja = document.getElementById('daftar-belanja');
+      const inputKeranjang = document.getElementById('input-keranjang');
+
+      btnTambah.addEventListener('click', function () {
+        console.log(inputKeranjang);
+        const li = document.createElement('li');
+        li.innerHTML = `Tes <button class='btn-hapus'>Hapus</button>`;
+
+        daftarBelanja.appendChild(li);
+        inputKeranjang.value = '';
+      });
+
+      daftarBelanja.addEventListener('click', function (event) {
+        if (event.target.classList.contains('btn-hapus')) {
+          event.target.parentElement.remove();
+        }
+      });
+    </script>
+  </body>
+</html>
